@@ -1,11 +1,13 @@
 var	db = require('../models');
 var polo = require('polo');
+var os = require('os');
+
 var apps = polo();
 
-var toggleDeviceStatus = function(name) {
+var toggleDeviceStatus = function(name, satus) {
 	db.Device.update({
 		updatedAt: new Date(),
-		status: true
+		status: satus
 	}, {
 		where: {
 			name: {
@@ -17,7 +19,7 @@ var toggleDeviceStatus = function(name) {
 
 var onDeviceUp = function(name) {
 	if(apps.get(name) !== null) {
-		toggleDeviceStatus(name);
+		toggleDeviceStatus(name, true);
 	} else {
 		if(name.indexOf("wol-") != -1) {
 			var service = apps.get(name);
@@ -33,12 +35,14 @@ var onDeviceUp = function(name) {
 
 var onDeviceDown = function(name) {
 	if(apps.get(name) !== null) {
-		toggleDeviceStatus(name);
+		toggleDeviceStatus(name, false);
 	}
 }
 
 
 module.exports = function (app) {
+	if(/^win/.test(os.platform())) return;
+
 	console.log("Watchers");
 	//On lance les watcher sur polo
 	apps.on('up', function(name, service) {
