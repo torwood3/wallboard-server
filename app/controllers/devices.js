@@ -15,9 +15,8 @@ router.get('/', function (req, res, next) {
 	});
 });
 
-router.route('/:id')
-
-	.get('/wol', function(req, res) {
+router
+	.get('/:id/wol', function(req, res) {
 		db.Device.findById(req.params.id).then(function (device) {
 			wol.wake(device.mac, function (error) {
 				if (error) {
@@ -27,8 +26,10 @@ router.route('/:id')
 				}
 			});
 		});
-	})
-	.get('/poweroff', function(req, res) {
+	});
+
+router
+	.get('/:id/poweroff', function(req, res) {
 		db.Device.findById(req.params.id).then(function (device) {
 			request
 				.get('http://' + device.ip +':'+ device.port +'/api/poweroff')
@@ -50,8 +51,10 @@ router.route('/:id')
 
 				});
 		});
-	})
-	.get('/ping', function (req, res, next) {
+	});
+
+router
+	.get('/:id/ping', function (req, res, next) {
 		db.Device.findById(req.params.id).then(function (device) {
 			pingDevice(device).then(function (result) {
 				console.log(result);
