@@ -53,5 +53,3 @@ module.exports = function (app) {
 		onDeviceDown(name);
 	});
 };
-
-

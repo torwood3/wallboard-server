@@ -26,7 +26,7 @@ router
 				if (error) {
 					res.status(200).json({error: "Magic paquet error"});
 				} else {
-					res.send();
+					res.end();
 				}
 			});
 		})
@@ -38,20 +38,21 @@ router
 router
 	.get('/:id/poweroff', function(req, res) {
 		db.Device.findById(req.params.id).then(function (device) {
+			var port = device.port || 3000;
 			request
-				.get('http://' + device.ip +':'+ device.port +'/api/poweroff')
-				.end(function(err, res) {
+				.get('http://' + device.ip +':'+ port +'/api/poweroff')
+				.end(function(err, _res) {
 					if (err) {
-						console.log(err);
-						res.send();
+						res.end();
 						return;
 					}
-					res.send();
+					res.end();
 
 					setTimeout(function(){
 						pingDevice(device).then(function (result) {
 							if (result.alive) {
-								request.get('http://' + device.ip +':'+ device.port +'/api/poweroff')
+								var port = device.port || 3000;
+								request.get('http://' + device.ip +':'+ port +'/api/poweroff')
 							}
 						});
 					}, 60 * 1000);
