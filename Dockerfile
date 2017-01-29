@@ -1,14 +1,14 @@
-FROM node:boron
+FROM hypriot/rpi-node:boron
 
 # Create app directory
 WORKDIR /app
 
 # Install app dependencies
-COPY package.json /app
+ADD package.json /app
 RUN npm install
 
-COPY . /app
+ADD . /app
 
 EXPOSE 3000
 
-CMD [ "npm", "start", "&" ]
+CMD ["npm","start", "&"]
