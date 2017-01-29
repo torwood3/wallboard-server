@@ -1,0 +1,6 @@
+result:
+    build: .
+    volumes:
+      - "./wallboard-server/data:/app/data"
+    ports:
+      - "3030:3000"
