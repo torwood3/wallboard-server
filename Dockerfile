@@ -1,15 +1,14 @@
 FROM node:boron
 
 # Create app directory
-RUN mkdir -p /usr/src/wallboard-server
-WORKDIR /usr/src/wallboard-server
+WORKDIR /app
 
 # Install app dependencies
-COPY package.json /usr/src/wallboard-server/
+COPY package.json /app
 RUN npm install
 
-COPY . /usr/src/wallboard-server
+COPY . /app
 
-EXPOSE 8080
+EXPOSE 3000
 
 CMD [ "npm", "start" ]
