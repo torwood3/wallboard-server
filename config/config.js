@@ -28,7 +28,7 @@ var config = {
     app: {
       name: 'wallboard-server'
     },
-    port: process.env.PORT || 3001,
+    port: process.env.PORT || 8080,
     db: 'sqlite://localhost/wallboard-server-production',
     storage: rootPath + 'data/wallboard-server-production'
   }

@@ -1,7 +1,9 @@
-result:
+version: '1.0'
+server:
     build: .
     environment:
-      - NODE_ENV="production"
+      - NODE_ENV=production
       - PORT=8080
     ports:
       - "8080:8001"
+    restart: always
